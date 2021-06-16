@@ -2,17 +2,25 @@
 
 A Flutter package to create Add To Cart Button. It will be useful for your awesome app.
 
-//TODO
+This creates a button that is used to let the users can add items to their shopping cart. This will be useful for the eCommerce app.
 
-![Imgur](https://imgur.com/download/9my0OAt)
+![Imgur](https://imgur.com/download/AxSPR0Z)
 
 ### Example
 
 ```dart
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
 class _MyAppState extends State<MyApp> {
-  double value = 3.5;
+  AddToCartButtonStateId stateId = AddToCartButtonStateId.idle;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,46 +30,71 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Example'),
+          title: Text('Flutter Add To Cart'),
         ),
-        body: Center(
-          child: StarRating(
-            value: value,
-            onValueChanged: (v) {
-              //
-              setState(() {
-                value = v;
-              });
-            },
-            starBuilder: (index, color) => Icon(
-              Icons.ac_unit_outlined,
-              color: color,
-            ),
-            starCount: 5,
-            starSize: 20,
-            valueLabelColor: const Color(0xff9b9b9b),
-            valueLabelTextStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-                fontStyle: FontStyle.normal,
-                fontSize: 12.0),
-            valueLabelRadius: 10,
-            maxValue: 5,
-            starSpacing: 2,
-            maxValueVisibility: true,
-            valueLabelVisibility: true,
-            animationDuration: Duration(milliseconds: 1000),
-            valueLabelPadding:
-                const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-            valueLabelMargin: const EdgeInsets.only(right: 8),
-            starOffColor: const Color(0xffe7e8ea),
-            starColor: Colors.yellow,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: AddToCartButton(
+                    trolley: Image.asset(
+                      'assets/ic_cart.png',
+                      width: 24,
+                      height: 24,
+                      color: Colors.white,
+                    ),
+                    text: Text(
+                      'Add to cart',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                    ),
+                    check: SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                    backgroundColor: Colors.deepOrangeAccent,
+                    onPressed: (id) {
+                      if (id == AddToCartButtonStateId.idle) {
+                        //handle logic when pressed on idle state button.
+                        setState(() {
+                          stateId = AddToCartButtonStateId.loading;
+                          Future.delayed(Duration(seconds: 3), () {
+                            setState(() {
+                              stateId = AddToCartButtonStateId.done;
+                            });
+                          });
+                        });
+                      } else if (id == AddToCartButtonStateId.done) {
+                        //handle logic when pressed on done state button.
+                        setState(() {
+                          stateId = AddToCartButtonStateId.idle;
+                        });
+                      }
+                    },
+                    stateId: stateId,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
+
 ```
 
 ### Development environment
