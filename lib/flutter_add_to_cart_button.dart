@@ -79,7 +79,7 @@ class _AddToCartButtonState extends State<AddToCartButton>
   late AnimationController _firstController;
   late AnimationController _crossController;
   late AnimationController _secondController;
-  AddToCartButtonStateId stateId = AddToCartButtonStateId.idle;
+  AddToCartButtonStateId _stateId = AddToCartButtonStateId.idle;
 
   @override
   void initState() {
@@ -127,8 +127,8 @@ class _AddToCartButtonState extends State<AddToCartButton>
     return Stack(
       alignment: Alignment.center,
       children: [
-        if (stateId == AddToCartButtonStateId.done) _buildSecond(context),
-        if (stateId != AddToCartButtonStateId.done ||
+        if (_stateId == AddToCartButtonStateId.done) _buildSecond(context),
+        if (_stateId != AddToCartButtonStateId.done ||
             _crossController.isAnimating)
           _buildFirst(context),
       ],
@@ -171,7 +171,7 @@ class _AddToCartButtonState extends State<AddToCartButton>
                       .chain(CurveTween(curve: Curves.fastLinearToSlowEaseIn))
                       .animate(_crossController),
                   child: _RunningTrolley(
-                    stateId: stateId,
+                    stateId: _stateId,
                     trolley: widget.trolley,
                     duration: widget.duration,
                     streetLineHeight: widget.streetLineHeight,
@@ -218,7 +218,7 @@ class _AddToCartButtonState extends State<AddToCartButton>
 
   /// update state from parent to start the animation.
   void _updateState(AddToCartButtonStateId stateId) {
-    this.stateId = stateId;
+    this._stateId = stateId;
     switch (stateId) {
       case AddToCartButtonStateId.loading:
         _loading();
@@ -252,16 +252,16 @@ class _AddToCartButtonState extends State<AddToCartButton>
   /// When users are pressed on the idle & loading state.
   /// Handle for idle state only.
   void _onPressedFirst() {
-    if (stateId == AddToCartButtonStateId.idle) {
-      widget.onPressed(stateId);
+    if (_stateId == AddToCartButtonStateId.idle) {
+      widget.onPressed(_stateId);
     }
   }
 
   /// When users are pressed on the done state.
   /// Handle for done state only.
   void _onPressedSecond() {
-    if (stateId == AddToCartButtonStateId.done) {
-      widget.onPressed(stateId);
+    if (_stateId == AddToCartButtonStateId.done) {
+      widget.onPressed(_stateId);
     }
   }
 }
