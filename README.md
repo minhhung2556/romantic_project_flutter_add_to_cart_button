@@ -4,7 +4,7 @@ A Flutter package to create Add To Cart Button. It will be useful for your aweso
 
 This creates a button that is used to let the users can add items to their shopping cart. This will be useful for the eCommerce app.
 
-![Imgur](https://imgur.com/download/AxSPR0Z)
+![Demo](./demo.gif)
 
 ### Example
 
