@@ -49,16 +49,16 @@ class AddToCartButton extends StatefulWidget {
   /// Create an Add To Cart button.
   const AddToCartButton({
     Key? key,
-    this.duration: const Duration(milliseconds: 3000),
+    this.duration = const Duration(milliseconds: 3000),
     required this.trolley,
     required this.text,
     required this.check,
     required this.onPressed,
     this.borderRadius,
     this.backgroundColor,
-    this.streetLineHeight: 2,
-    this.streetLineDashWidth: 12,
-    this.trolleyLeftMargin: 12,
+    this.streetLineHeight = 2,
+    this.streetLineDashWidth = 12,
+    this.trolleyLeftMargin = 12,
     this.stateId = AddToCartButtonStateId.idle,
   }) : super(key: key);
 
@@ -66,8 +66,7 @@ class AddToCartButton extends StatefulWidget {
   _AddToCartButtonState createState() => _AddToCartButtonState();
 }
 
-class _AddToCartButtonState extends State<AddToCartButton>
-    with TickerProviderStateMixin {
+class _AddToCartButtonState extends State<AddToCartButton> with TickerProviderStateMixin {
   final TweenSequence<double> _bounceScaleTween = TweenSequence<double>([
     TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.8), weight: 0.3),
     TweenSequenceItem(tween: Tween(begin: 0.8, end: 1.2), weight: 0.3),
@@ -127,9 +126,7 @@ class _AddToCartButtonState extends State<AddToCartButton>
       alignment: Alignment.center,
       children: [
         if (_stateId == AddToCartButtonStateId.done) _buildSecond(context),
-        if (_stateId != AddToCartButtonStateId.done ||
-            _crossController.isAnimating)
-          _buildFirst(context),
+        if (_stateId != AddToCartButtonStateId.done || _crossController.isAnimating) _buildFirst(context),
       ],
     );
   }
@@ -137,25 +134,22 @@ class _AddToCartButtonState extends State<AddToCartButton>
   /// build the [AddToCartButtonStateId.idle] & [AddToCartButtonStateId.loading] state widget.
   Widget _buildFirst(BuildContext context) {
     final borderRadius = widget.borderRadius ?? BorderRadius.circular(24);
-    final double height =
-        math.max(borderRadius.topLeft.y, borderRadius.topRight.y) +
-            math.max(borderRadius.bottomLeft.y, borderRadius.bottomRight.y);
+    final double height = math.max(borderRadius.topLeft.y, borderRadius.topRight.y) +
+        math.max(borderRadius.bottomLeft.y, borderRadius.bottomRight.y);
     return ScaleTransition(
       scale: _bounceScaleTween.animate(_firstController),
       child: ElevatedButton(
         onPressed: this._onPressedFirst,
         style: ButtonStyle(
-          shape:
-              MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          shape: WidgetStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
             borderRadius: borderRadius,
           )),
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-          elevation: MaterialStateProperty.all<double>(0.0),
+          padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+          elevation: WidgetStateProperty.all<double>(0.0),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          minimumSize: MaterialStateProperty.all<Size>(Size.zero),
-          backgroundColor: widget.backgroundColor != null
-              ? MaterialStateProperty.all<Color>(widget.backgroundColor!)
-              : null,
+          minimumSize: WidgetStateProperty.all<Size>(Size.zero),
+          backgroundColor:
+              widget.backgroundColor != null ? WidgetStateProperty.all<Color>(widget.backgroundColor!) : null,
         ),
         child: SizeTransition(
           axis: Axis.horizontal,
@@ -201,14 +195,13 @@ class _AddToCartButtonState extends State<AddToCartButton>
       child: ElevatedButton(
         onPressed: this._onPressedSecond,
         style: ButtonStyle(
-          shape: MaterialStateProperty.all<OutlinedBorder>(CircleBorder()),
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-          elevation: MaterialStateProperty.all<double>(0.0),
+          shape: WidgetStateProperty.all<OutlinedBorder>(CircleBorder()),
+          padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+          elevation: WidgetStateProperty.all<double>(0.0),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          minimumSize: MaterialStateProperty.all<Size>(Size.zero),
-          backgroundColor: widget.backgroundColor != null
-              ? MaterialStateProperty.all<Color>(widget.backgroundColor!)
-              : null,
+          minimumSize: WidgetStateProperty.all<Size>(Size.zero),
+          backgroundColor:
+              widget.backgroundColor != null ? WidgetStateProperty.all<Color>(widget.backgroundColor!) : null,
         ),
         child: widget.check,
       ),
@@ -281,7 +274,7 @@ class _RunningTrolley extends StatefulWidget {
   /// [streetLineHeight] & [streetLineDashWidth] are used to draw the street.
   const _RunningTrolley({
     Key? key,
-    this.stateId: AddToCartButtonStateId.idle,
+    this.stateId = AddToCartButtonStateId.idle,
     required this.trolley,
     required this.duration,
     required this.streetLineHeight,
@@ -293,8 +286,7 @@ class _RunningTrolley extends StatefulWidget {
   _RunningTrolleyState createState() => _RunningTrolleyState();
 }
 
-class _RunningTrolleyState extends State<_RunningTrolley>
-    with TickerProviderStateMixin {
+class _RunningTrolleyState extends State<_RunningTrolley> with TickerProviderStateMixin {
   late AnimationController _streetController;
   late AnimationController _trolleyController;
   late AnimationController _disappearController;
@@ -307,8 +299,7 @@ class _RunningTrolleyState extends State<_RunningTrolley>
 
   @override
   void initState() {
-    _disappearTween = Tween<double>(begin: 1.0, end: 0.0)
-        .chain(CurveTween(curve: Curves.linear));
+    _disappearTween = Tween<double>(begin: 1.0, end: 0.0).chain(CurveTween(curve: Curves.linear));
 
     _trolleyScaleTween = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.5), weight: 0.1),
@@ -316,38 +307,34 @@ class _RunningTrolleyState extends State<_RunningTrolley>
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.0), weight: 0.8),
     ]);
     _trolleyRotateTween = TweenSequence<double>([
-      TweenSequenceItem(
-          tween: Tween(begin: 0.0, end: _convertDegToRad(-20.0)), weight: 0.1),
-      TweenSequenceItem(
-          tween: Tween(
-              begin: _convertDegToRad(-20.0), end: _convertDegToRad(20.0)),
-          weight: 0.1),
-      TweenSequenceItem(
-          tween: Tween(begin: _convertDegToRad(20.0), end: 0.0), weight: 0.8),
+      TweenSequenceItem(tween: Tween(begin: 0.0, end: _convertDegToRad(-20.0)), weight: 0.1),
+      TweenSequenceItem(tween: Tween(begin: _convertDegToRad(-20.0), end: _convertDegToRad(20.0)), weight: 0.1),
+      TweenSequenceItem(tween: Tween(begin: _convertDegToRad(20.0), end: 0.0), weight: 0.8),
     ]);
     _streetTween = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0.0, end: 0.0), weight: 0.1),
       TweenSequenceItem(tween: Tween(begin: 0.0, end: -1.0), weight: 0.9),
     ]);
 
-    _streetController =
-        AnimationController(vsync: this, duration: widget.duration);
+    _streetController = AnimationController(vsync: this, duration: widget.duration);
     _streetController.addListener(() {
       setState(() {});
     });
     final trolleyDuration = widget.duration * 0.8;
-    _trolleyController =
-        AnimationController(vsync: this, duration: trolleyDuration);
+    _trolleyController = AnimationController(vsync: this, duration: trolleyDuration);
     _trolleyController.addListener(() {
       setState(() {});
     });
     final disappearDuration = widget.duration * 0.1;
-    _disappearController =
-        AnimationController(vsync: this, duration: disappearDuration);
+    _disappearController = AnimationController(vsync: this, duration: disappearDuration);
     _disappearController.addListener(() {
       setState(() {});
     });
     super.initState();
+    Future.delayed(Duration(milliseconds: 10)).then((_) {
+      // do this to make sure the renderBox is ready.
+      setState(() {});
+    });
   }
 
   @override
@@ -380,12 +367,12 @@ class _RunningTrolleyState extends State<_RunningTrolley>
   Widget build(BuildContext context) {
     var box = context.findRenderObject() as RenderBox?;
     final double width = box?.hasSize == true ? box!.size.width : 0;
+    // print('_RunningTrolleyState.build.trolleyWidth: $width');
     if (_trolleyTranslateTween == null && width > 0) {
       final left = Offset(widget.trolleyLeftMargin, 0.0);
       _trolleyTranslateTween = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: left, end: left), weight: 0.1),
-        TweenSequenceItem(
-            tween: Tween(begin: left, end: Offset(width, 0.0)), weight: 0.9),
+        TweenSequenceItem(tween: Tween(begin: left, end: Offset(width, 0.0)), weight: 0.9),
       ]);
     }
 
@@ -399,9 +386,7 @@ class _RunningTrolleyState extends State<_RunningTrolley>
             Transform.translate(
               offset: _trolleyTranslateTween == null
                   ? Offset.zero
-                  : _trolleyTranslateTween!
-                      .chain(CurveTween(curve: Curves.fastOutSlowIn))
-                      .evaluate(_trolleyController),
+                  : _trolleyTranslateTween!.chain(CurveTween(curve: Curves.fastOutSlowIn)).evaluate(_trolleyController),
               child: Transform.rotate(
                 angle: _trolleyRotateTween.evaluate(_trolleyController),
                 child: ScaleTransition(
@@ -420,9 +405,8 @@ class _RunningTrolleyState extends State<_RunningTrolley>
             child: CustomPaint(
               painter: _StreetLinePainter(
                 dashWidth: widget.streetLineDashWidth,
-                translateFactor: _streetTween
-                    .chain(CurveTween(curve: Curves.fastOutSlowIn))
-                    .evaluate(_streetController),
+                translateFactor:
+                    _streetTween.chain(CurveTween(curve: Curves.fastOutSlowIn)).evaluate(_streetController),
               ),
             ),
           ),
@@ -466,8 +450,8 @@ class _StreetLinePainter extends CustomPainter {
   /// Constructor
   /// [translateFactor] is the animation controller value that controls this.
   _StreetLinePainter({
-    this.dashWidth: 12.0,
-    this.translateFactor: 0.0,
+    this.dashWidth = 12.0,
+    this.translateFactor = 0.0,
   });
 
   @override
@@ -483,13 +467,10 @@ class _StreetLinePainter extends CustomPainter {
     final distance = size.width * 3;
     final numberOfHorizontalDash = distance ~/ dashWidth + 2;
     var left = size.centerLeft(Offset.zero);
-    left +=
-        Offset(size.width + dashWidth * 2 + translateFactor * distance, 0.0);
+    left += Offset(size.width + dashWidth * 2 + translateFactor * distance, 0.0);
 
     for (int i = 0; i < numberOfHorizontalDash; i++) {
-      canvas.drawLine(
-          left + Offset(i * dashWidth, 0),
-          left + Offset(i * dashWidth + dashWidth, 0),
+      canvas.drawLine(left + Offset(i * dashWidth, 0), left + Offset(i * dashWidth + dashWidth, 0),
           (i % 2 == 0) ? paint : gapPaint);
     }
   }
