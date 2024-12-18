@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
+                        color: Colors.white,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.fade,
