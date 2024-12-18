@@ -331,6 +331,10 @@ class _RunningTrolleyState extends State<_RunningTrolley> with TickerProviderSta
       setState(() {});
     });
     super.initState();
+    Future.delayed(Duration(milliseconds: 10)).then((_) {
+      // do this to make sure the renderBox is ready.
+      setState(() {});
+    });
   }
 
   @override
@@ -363,6 +367,7 @@ class _RunningTrolleyState extends State<_RunningTrolley> with TickerProviderSta
   Widget build(BuildContext context) {
     var box = context.findRenderObject() as RenderBox?;
     final double width = box?.hasSize == true ? box!.size.width : 0;
+    // print('_RunningTrolleyState.build.trolleyWidth: $width');
     if (_trolleyTranslateTween == null && width > 0) {
       final left = Offset(widget.trolleyLeftMargin, 0.0);
       _trolleyTranslateTween = TweenSequence([
