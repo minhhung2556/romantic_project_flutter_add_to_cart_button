@@ -100,39 +100,11 @@ class _MyAppState extends State<MyApp> {
 ### Development environment
 
 ```
-[✓] Flutter (Channel stable, 3.0.1, on macOS 12.3.1 21E258 darwin-x64, locale en-VN)
-    • Flutter version 3.0.1 at ~/fvm/versions/stable
+[!] Flutter (Channel stable, 3.24.3, on Microsoft Windows [Version 10.0.19045.5131], locale en-US)
+    • Flutter version 3.24.3 on channel stable at C:\Users\admin\fvm\default
     • Upstream repository https://github.com/flutter/flutter.git
-    • Framework revision fb57da5f94 (5 days ago), 2022-05-19 15:50:29 -0700
-    • Engine revision caaafc5604
-    • Dart version 2.17.1
-    • DevTools version 2.12.2
-
-[✓] Android toolchain - develop for Android devices (Android SDK version 30.0.3)
-    • Android SDK at ~/Library/Android/sdk
-    • Platform android-31, build-tools 30.0.3
-    • ANDROID_HOME = ~/Library/Android/sdk
-    • ANDROID_SDK_ROOT = ~/Library/Android/sdk
-    • Java binary at: /Applications/Android Studio.app/Contents/jre/Contents/Home/bin/java
-    • Java version OpenJDK Runtime Environment (build 11.0.12+0-b1504.28-7817840)
-    • All Android licenses accepted.
-
-[✓] Xcode - develop for iOS and macOS (Xcode 13.3.1)
-    • Xcode at /Applications/Xcode.app/Contents/Developer
-    • CocoaPods version 1.11.3
-
-[✓] Chrome - develop for the web
-    • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
-
-[✓] Android Studio (version 2021.2)
-    • Android Studio at /Applications/Android Studio.app/Contents
-    • Flutter plugin can be installed from:
-      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
-    • Dart plugin can be installed from:
-      🔨 https://plugins.jetbrains.com/plugin/6351-dart
-    • Java version OpenJDK Runtime Environment (build 11.0.12+0-b1504.28-7817840)
-
-[✓] VS Code (version 1.67.2)
-    • VS Code at /Applications/Visual Studio Code.app/Contents
-    • Flutter extension version 3.40.0
+    • Framework revision 2663184aa7 (3 months ago), 2024-09-11 16:27:48 -0500
+    • Engine revision 36335019a8
+    • Dart version 3.5.3
+    • DevTools version 2.37.3
 ```
